@@ -1,4 +1,4 @@
-import token
+import token_
 
 class Lexer:
 	def __init__(self, input: str):
@@ -19,7 +19,7 @@ class Lexer:
 		self.position = self.readPosition
 		self.readPosition += 1
 
-	def next_token(self) -> token.Token:
+	def next_token(self):
 
 		self.skip_whitespace()
 
@@ -28,55 +28,57 @@ class Lexer:
 				if self.peek_next_char() == "=":
 					ch = self.ch
 					self.read_char()
-					tok = new_token(token.EQ, (ch + self.ch))
+					tok = new_token(token_.EQ, (ch + self.ch))
 				else:
-					tok = new_token(token.ASSIGN, self.ch)
+					tok = new_token(token_.ASSIGN, self.ch)
 			case "+":
-				tok = new_token(token.PLUS, self.ch)
+				tok = new_token(token_.PLUS, self.ch)
 			case "-":
-				tok = new_token(token.MINUS, self.ch)
+				tok = new_token(token_.MINUS, self.ch)
 			case "!":
 				if self.peek_next_char() == "=":
 					ch = self.ch 
 					self.read_char()
-					tok = new_token(token.NOT_EQ, (ch + self.ch))
+					tok = new_token(token_.NOT_EQ, (ch + self.ch))
 				else:
-					tok = new_token(token.BANG, self.ch)
+					tok = new_token(token_.BANG, self.ch)
 			case "/":
-				tok = new_token(token.SLASH, self.ch)
+				tok = new_token(token_.SLASH, self.ch)
 			case "*":
-				tok = new_token(token.ASTERISK, self.ch)
+				tok = new_token(token_.ASTERISK, self.ch)
 			case "<":
-				tok = new_token(token.LT, self.ch)
+				tok = new_token(token_.LT, self.ch)
 			case ">":
-				tok = new_token(token.GT, self.ch)
+				tok = new_token(token_.GT, self.ch)
 			case ";":
-				tok = new_token(token.SEMICOLON, self.ch)
+				tok = new_token(token_.SEMICOLON, self.ch)
 			case ",":
-				tok = new_token(token.COMMA, self.ch)
+				tok = new_token(token_.COMMA, self.ch)
 			case "(":
-				tok = new_token(token.LPAREN, self.ch)
+				tok = new_token(token_.LPAREN, self.ch)
 			case ")":
-				tok = new_token(token.RPAREN, self.ch)
+				tok = new_token(token_.RPAREN, self.ch)
 			case "{":
-				tok = new_token(token.LBRACE, self.ch)
+				tok = new_token(token_.LBRACE, self.ch)
 			case "}":
-				tok = new_token(token.RBRACE, self.ch)
+				tok = new_token(token_.RBRACE, self.ch)
 			case 0:
-				tok = new_token(token.EOF, "")
+				tok = new_token(token_.EOF, "")
 			case _:
+				
 				if is_letter(self.ch):
 					literal = self.read_identifier()
-					type = token.lookup_ident(literal)
+					type = token_.lookup_ident(literal)
 					tok = new_token(type, literal)
 					return tok
+
 				elif is_digit(self.ch):
 					literal = self.read_number()
-					type = token.INT
+					type = token_.INT
 					tok = new_token(type, literal)
 					return tok
 				else:
-					tok = new_token(token.ILLEGAL, self.ch)
+					tok = new_token(token_.ILLEGAL, self.ch)
 
 		self.read_char()
 		return tok
@@ -110,8 +112,8 @@ def is_letter(ch: str):
 def is_digit(ch: str):
 	return ('0' <= ch <= '9')
 
-def new_token(type: token.TokenType, ch: str):
-	return token.Token(Type = type, Literal = ch)
+def new_token(type: token_.TokenType, ch: str):
+	return token_.Token(Type = type, Literal = ch)
 
 
 

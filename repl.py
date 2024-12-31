@@ -1,5 +1,5 @@
 import lexer
-import token
+import token_
 
 PROMPT = ">>"
 

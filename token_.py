@@ -53,7 +53,7 @@ keywords = {
 	"return": RETURN
 }
 
-def lookup_ident(ident: str) -> TokenType:
+def lookup_ident(ident: str):
 	if ident in keywords.keys():
 		return keywords[ident]
 	return IDENT
