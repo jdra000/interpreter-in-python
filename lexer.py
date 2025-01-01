@@ -65,7 +65,7 @@ class Lexer:
 			case 0:
 				tok = new_token(token_.EOF, "")
 			case _:
-				
+
 				if is_letter(self.ch):
 					literal = self.read_identifier()
 					type = token_.lookup_ident(literal)
@@ -77,6 +77,7 @@ class Lexer:
 					type = token_.INT
 					tok = new_token(type, literal)
 					return tok
+
 				else:
 					tok = new_token(token_.ILLEGAL, self.ch)
 
@@ -90,7 +91,7 @@ class Lexer:
 			return self.input[self.readPosition]
 
 	def skip_whitespace(self):
-		if self.ch == " " or self.ch == "\t" or self.ch == "\n" or self.ch == "\r":
+		while self.ch == " " or self.ch == "\t" or self.ch == "\n" or self.ch == "\r":
 			self.read_char()
 
 	def read_identifier(self):

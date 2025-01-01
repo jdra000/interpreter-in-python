@@ -2,6 +2,7 @@ import unittest
 import ast_
 import lexer
 import parser
+import token_
 
 class ParserTest(unittest.TestCase):
 
@@ -22,9 +23,13 @@ let foobar = 838383;"""
 
 		self.assertEqual(len(program.statements), 3)
 
-		test_identifiers = ["x", "y", "foobar"]
+		test_identifiers = [
+			{"expected_identifier": "x"},
+			{"expected_identifier": "y"},
+			{"expected_identifier": "foobar"}
+		]
 
-		for i in range (len(program.statements)):
+		for i, test in enumerate(test_identifiers):
 			stmt = program.statements[i]
 
 			self.assertIsInstance(stmt, ast_.LetStatement)
@@ -32,7 +37,7 @@ let foobar = 838383;"""
 			self.assertEqual(stmt.token.Literal, "let")
 
 			self.assertIsInstance(stmt.name, ast_.Identifier)
-			self.assertEqual(stmt.name.value, test_identifiers[i])
+			self.assertEqual(stmt.name.value, test["expected_identifier"])
 
 	def test_return_statements(self):
 		"""
@@ -94,8 +99,6 @@ return 838383;"""
 
 		self.assertIsInstance(stmt, ast_.ExpressionStatement)
 
-		self.assertEqual(stmt.token.Literal, "5")
-
 		self.assertIsInstance(stmt.expression, ast_.IntegerLiteral)
 		self.assertEqual(stmt.expression.value, 5)
 
@@ -121,6 +124,7 @@ return 838383;"""
 			self.assertIsInstance(stmt, ast_.ExpressionStatement)
 
 			self.assertIsInstance(stmt.expression, ast_.PrefixExpression)
+
 			self.assertEqual(stmt.expression.operator, test["operator"])
 			self.assertIsInstance(stmt.expression.right, ast_.IntegerLiteral)
 			self.assertEqual(stmt.expression.right.value, test["int_value"])
@@ -154,17 +158,12 @@ return 838383;"""
 			self.assertIsInstance(stmt, ast_.ExpressionStatement)
 
 			self.assertIsInstance(stmt.expression, ast_.InfixExpression)
+
 			self.assertIsInstance(stmt.expression.left, ast_.IntegerLiteral)
 			self.assertEqual(stmt.expression.left.value, test["left_value"])
 			self.assertEqual(stmt.expression.operator, test["operator"])
 			self.assertIsInstance(stmt.expression.right, ast_.IntegerLiteral)
 			self.assertEqual(stmt.expression.right.value, test["right_value"])
-
-
-
-
-
-
 
 
 

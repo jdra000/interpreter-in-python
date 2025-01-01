@@ -7,7 +7,7 @@ def start():
 	user_input = input(PROMPT)
 	l = lexer.Lexer(user_input)
 
-	while (tok := l.next_token()).Type != token.EOF:
+	while (tok := l.next_token()).Type != token_.EOF:
 		print(f"Type: {tok.Type}, Literal: {tok.Literal}")
 
 start()
